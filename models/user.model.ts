@@ -1,5 +1,6 @@
 
 import { Schema, model, Document } from "mongoose";
+import bcrypt from 'bcrypt';
 
 const userSchema = new Schema( {
 
@@ -22,13 +23,25 @@ const userSchema = new Schema( {
     },
 });
 
-interface Iuser extends Document {
+userSchema.method('checkPassword', function( password: string  = ''): boolean {
+
+    if ( bcrypt.compareSync( password, this.password )) {
+        return true;
+    }
+
+    return false;
+});
+
+
+interface IUser extends Document {
 
     name: string; // string minusucla porque es propio de typescript 
     email: string;
     password: string;
     avatar: string;
 
+    checkPassword( password: string): boolean;
+
 }
 
-export const User = model('User', userSchema);
+export const User = model<IUser>('User', userSchema);
