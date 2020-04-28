@@ -74,7 +74,6 @@ userRoutes.post('/create', ( req: Request, res: Response) => {
         res.json( {
             ok: true,
             token: tokenUser
-            // user: userDB
         });
 
     

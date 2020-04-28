@@ -75,7 +75,7 @@ class FileSystem {
             fs_1.default.mkdirSync(pathPost);
         }
         const tempImages = this.getTempImages(userId);
-        console.log('tempImages', tempImages);
+        // console.log('tempImages', tempImages);
         // Change images name, then it will change the path
         tempImages.forEach(img => {
             fs_1.default.renameSync(`${pathTemp}/${img}`, `${pathPost}/${img}`);

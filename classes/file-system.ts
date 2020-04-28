@@ -97,7 +97,7 @@ export default class FileSystem {
 
         const tempImages = this.getTempImages( userId );
 
-        console.log('tempImages', tempImages);
+        // console.log('tempImages', tempImages);
 
         // Change images name, then it will change the path
         tempImages.forEach( img => {

@@ -86,13 +86,11 @@ postRoutes.post('/upload', [auth_1.verifyToken], (req, res) => __awaiter(void 0,
         file: file.mimetype
     });
 }));
-postRoutes.get('/image/:userid/:img', [auth_1.verifyToken], (req, res) => {
+// postRoutes.get('/image/:userid/:img', [ verifyToken ], (req: any, res: Response) => {
+postRoutes.get('/image/:userid/:img', (req, res) => {
     const userId = req.params.userid;
     const img = req.params.img;
     const pathPhoto = fileSystem.getPhotoUrl(userId, img);
     res.sendFile(pathPhoto);
-    // res.json({
-    //     pathPhoto
-    // });
 });
 exports.default = postRoutes;

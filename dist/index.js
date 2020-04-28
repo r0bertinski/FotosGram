@@ -9,7 +9,11 @@ const mongoose_1 = __importDefault(require("mongoose"));
 const body_parser_1 = __importDefault(require("body-parser"));
 const post_1 = __importDefault(require("./routes/post"));
 const express_fileupload_1 = __importDefault(require("express-fileupload"));
+// CORS
+const cors_1 = __importDefault(require("cors"));
 const server = new server_1.default();
+// Config CORS (accept petitions from another origins)
+server.app.use(cors_1.default({ origin: true, credentials: true }));
 // Body parser
 server.app.use(body_parser_1.default.urlencoded({ extended: true }));
 server.app.use(body_parser_1.default.json());

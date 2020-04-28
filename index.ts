@@ -5,8 +5,13 @@ import mongoose from  'mongoose';
 import bodyParser from 'body-parser';
 import postRoutes from './routes/post';
 import fileUpload from 'express-fileupload';
+// CORS
+import cors from 'cors';
 
 const server = new Server();
+
+// Config CORS (accept petitions from another origins)
+server.app.use( cors ( { origin: true, credentials: true }));
 
 // Body parser
 server.app.use( bodyParser.urlencoded( { extended: true }) );
