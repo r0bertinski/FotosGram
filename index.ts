@@ -25,7 +25,9 @@ server.app.use('/user', userRoutes);
 
 server.app.use('/posts', postRoutes);
 
-
+// prod
+// user:r0bertinski
+// pwd:jf2BYbZmUpyFKXdd
 
 mongoose.connect('mongodb://localhost:27017/fotosgram',
                  { useNewUrlParser: true, useCreateIndex: true}, ( err) => {
