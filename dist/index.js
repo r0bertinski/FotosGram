@@ -26,13 +26,18 @@ server.app.use('/posts', post_1.default);
 // prod
 // user:r0bertinski
 // pwd:jf2BYbZmUpyFKXdd
-const mongo_port = process.env.MONGO_PORT || 2000;
+const mongo_db_port = process.env.MONGO_DB_PORT || 27017;
+const mongo_db_server = process.env.MONGO_DB_SERVER || 'localhost';
+const mongo_db_name = process.env.MONGO_DB_NAME || 'fotosgram';
+const mongo_db_user = process.env.MONGO_DB_USER || 27017;
+const mongo_db_pwd = process.env.MONGO_DB_PWD || null;
 // const port = process.env.SERVER_PORT || 27017;
-console.log('mongo_port', mongo_port);
-mongoose_1.default.connect(`mongodb://localhost:${mongo_port}/fotosgram`, { useNewUrlParser: true, useCreateIndex: true }, (err) => {
+console.log('mongo_port', mongo_db_port);
+//mongodb://<dbuser>:<dbpassword>@ds053176.mlab.com:53176/heroku_bt88x21m
+mongoose_1.default.connect(`mongodb://${mongo_db_user}:${mongo_db_pwd}@${mongo_db_server}:${mongo_db_port}/${mongo_db_name}`, { useNewUrlParser: true, useCreateIndex: true }, (err) => {
     if (err)
         throw err;
-    console.log(`Database online in por ${mongo_port}`);
+    console.log(`Database online in por ${mongo_db_port}`);
 });
 server.start(() => {
     console.log(`Servidor corriendo en puerto ${this.port}`);
