@@ -40,5 +40,5 @@ mongoose_1.default.connect(`mongodb://${mongo_db_user}:${mongo_db_pwd}@${mongo_d
     console.log(`Database online in por ${mongo_db_port}`);
 });
 server.start(() => {
-    console.log(`Servidor corriendo en puerto ${this.port}`);
+    console.log(`Servidor corriendo en puerto ${server.port}`);
 });
