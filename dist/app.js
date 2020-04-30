@@ -29,7 +29,7 @@ server.app.use('/posts', post_1.default);
 const mongo_db_port = process.env.MONGO_DB_PORT || 27017;
 const mongo_db_server = process.env.MONGO_DB_SERVER || 'localhost';
 const mongo_db_name = process.env.MONGO_DB_NAME || 'fotosgram';
-const mongo_db_user = process.env.MONGO_DB_USER || 27017;
+const mongo_db_user = process.env.MONGO_DB_USER || 'papixulo';
 const mongo_db_pwd = process.env.MONGO_DB_PWD || null;
 // const port = process.env.SERVER_PORT || 27017;
 console.log('mongo_port', mongo_db_port);
