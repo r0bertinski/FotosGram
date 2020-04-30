@@ -1,8 +1,10 @@
 import express from 'express';  
 
+
 export default class Server {
     public app: express.Application;
-    public port: number = 3000;
+
+    public port: number = 3000;;
 
     constructor() {
         // inicializamos express.
@@ -10,8 +12,8 @@ export default class Server {
     }
 
     start( callback: Function ) { 
-        this.app.listen( this.port, callback);
-        // this.app.listen( this.port, function() { console.log('hessllo')});
+        // this.app.listen( this.port, callback());
+        this.app.listen( this.port, function() { console.log(`listen por ${this.port}`)});
     }
 
 }

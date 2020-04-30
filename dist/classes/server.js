@@ -10,9 +10,10 @@ class Server {
         // inicializamos express.
         this.app = express_1.default();
     }
+    ;
     start(callback) {
-        this.app.listen(this.port, callback);
-        // this.app.listen( this.port, function() { console.log('hessllo')});
+        // this.app.listen( this.port, callback());
+        this.app.listen(this.port, function () { console.log(`listen por ${this.port}`); });
     }
 }
 exports.default = Server;

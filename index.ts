@@ -9,6 +9,8 @@ import fileUpload from 'express-fileupload';
 import cors from 'cors';
 
 const server = new Server();
+require('dotenv').config()
+
 
 // Config CORS (accept petitions from another origins)
 server.app.use( cors ( { origin: true, credentials: true }));
@@ -28,15 +30,20 @@ server.app.use('/posts', postRoutes);
 // prod
 // user:r0bertinski
 // pwd:jf2BYbZmUpyFKXdd
+const mongo_port = process.env.MONGO_PORT || 27017;
+// const port = process.env.SERVER_PORT || 27017;
 
-mongoose.connect('mongodb://localhost:27017/fotosgram',
+console.log('mongo_port', mongo_port);
+
+
+mongoose.connect(`mongodb://localhost:${mongo_port}/fotosgram`,
                  { useNewUrlParser: true, useCreateIndex: true}, ( err) => {
 
                     if ( err ) throw err;
 
-                    console.log('Base de datos online');
+                    console.log(`Database online in por ${mongo_port}`);
                 });
 
 server.start( () => {
-    console.log(`Servidor corriendo en puerto ${ server.port }`);
+    console.log(`Servidor corriendo en puerto ${ this.port }`);
 });
