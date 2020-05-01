@@ -37,7 +37,7 @@ console.log('mongo_port', mongo_db_port);
 // let mongoConnetUrl = `mongodb://${mongo_db_user}:${mongo_db_pwd}@${mongo_db_server}:${mongo_db_port}/${mongo_db_name}`;
 // 
 let mongoConnetUrl = `mongodb://${mongo_db_server}:${mongo_db_port}/${mongo_db_name}`;
-if (process.env.dev) {
+if (!process.env.dev) {
     mongoConnetUrl = `mongodb://${mongo_db_user}:${mongo_db_pwd}@${mongo_db_server}:${mongo_db_port}/${mongo_db_name}`;
 }
 console.log('mongoConnetUrl', mongoConnetUrl);
