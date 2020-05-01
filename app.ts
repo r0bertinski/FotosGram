@@ -38,14 +38,21 @@ const mongo_db_pwd = process.env.MONGO_DB_PWD || null;
 
 
 
-// const port = process.env.SERVER_PORT || 27017;
-
 console.log('mongo_port', mongo_db_port);
 
-//mongodb://<dbuser>:<dbpassword>@ds053176.mlab.com:53176/heroku_bt88x21m
+// By default we set the production env uri.
+// let mongoConnetUrl = `mongodb://${mongo_db_user}:${mongo_db_pwd}@${mongo_db_server}:${mongo_db_port}/${mongo_db_name}`;
+// 
+let mongoConnetUrl = `mongodb://${mongo_db_server}:${mongo_db_port}/${mongo_db_name}`;
 
-mongoose.connect(`mongodb://${mongo_db_user}:${mongo_db_pwd}@${mongo_db_server}:${mongo_db_port}/${mongo_db_name}`,
-                 { useNewUrlParser: true, useCreateIndex: true}, ( err) => {
+if( process.env.dev ){
+   mongoConnetUrl = `mongodb://${mongo_db_server}:${mongo_db_port}/${mongo_db_name}`;
+}
+
+console.log('mongoConnetUrl', mongoConnetUrl);
+
+mongoose.connect(mongoConnetUrl,
+                 { useNewUrlParser: true, useCreateIndex: true}, ( err ) => {
 
                     if ( err ) { 
                         console.log('Error crash server');
@@ -56,5 +63,5 @@ mongoose.connect(`mongodb://${mongo_db_user}:${mongo_db_pwd}@${mongo_db_server}:
                 });
 
 server.start( () => {
-    console.log(`Servidor corriendo en puerto ${ server.port }`);
+    console.log(`Servidor corriendo en puerto ${ process.env.SERVER_PORT }`);
 });
