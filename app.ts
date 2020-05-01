@@ -10,6 +10,7 @@ import cors from 'cors';
 
 const server = new Server();
 require('dotenv').config()
+const env = process.env.NODE_ENV;
 
 
 // Config CORS (accept petitions from another origins)
@@ -40,13 +41,14 @@ const mongo_db_pwd = process.env.MONGO_DB_PWD || null;
 
 console.log('mongo_port', mongo_db_port);
 
+
 // By default we set the production env uri.
 // let mongoConnetUrl = `mongodb://${mongo_db_user}:${mongo_db_pwd}@${mongo_db_server}:${mongo_db_port}/${mongo_db_name}`;
 // 
 let mongoConnetUrl = `mongodb://${mongo_db_server}:${mongo_db_port}/${mongo_db_name}`;
 
 if( process.env.dev ){
-   mongoConnetUrl = `mongodb://${mongo_db_server}:${mongo_db_port}/${mongo_db_name}`;
+   mongoConnetUrl = `mongodb://${mongo_db_user}:${mongo_db_pwd}@${mongo_db_server}:${mongo_db_port}/${mongo_db_name}`;
 }
 
 console.log('mongoConnetUrl', mongoConnetUrl);

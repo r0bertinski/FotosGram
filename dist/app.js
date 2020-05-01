@@ -13,6 +13,7 @@ const express_fileupload_1 = __importDefault(require("express-fileupload"));
 const cors_1 = __importDefault(require("cors"));
 const server = new server_1.default();
 require('dotenv').config();
+const env = process.env.NODE_ENV;
 // Config CORS (accept petitions from another origins)
 server.app.use(cors_1.default({ origin: true, credentials: true }));
 // Body parser
@@ -37,7 +38,7 @@ console.log('mongo_port', mongo_db_port);
 // 
 let mongoConnetUrl = `mongodb://${mongo_db_server}:${mongo_db_port}/${mongo_db_name}`;
 if (process.env.dev) {
-    mongoConnetUrl = `mongodb://${mongo_db_server}:${mongo_db_port}/${mongo_db_name}`;
+    mongoConnetUrl = `mongodb://${mongo_db_user}:${mongo_db_pwd}@${mongo_db_server}:${mongo_db_port}/${mongo_db_name}`;
 }
 console.log('mongoConnetUrl', mongoConnetUrl);
 mongoose_1.default.connect(mongoConnetUrl, { useNewUrlParser: true, useCreateIndex: true }, (err) => {
