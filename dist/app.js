@@ -32,6 +32,7 @@ const mongo_db_server = process.env.MONGO_DB_SERVER || 'localhost';
 const mongo_db_name = process.env.MONGO_DB_NAME || 'fotosgram';
 const mongo_db_user = process.env.MONGO_DB_USER || 'papixulo';
 const mongo_db_pwd = process.env.MONGO_DB_PWD || null;
+const SERVER_PORT = process.env.PORT || 3000;
 console.log('mongo_port', mongo_db_port);
 // By default we set the production env uri.
 // let mongoConnetUrl = `mongodb://${mongo_db_user}:${mongo_db_pwd}@${mongo_db_server}:${mongo_db_port}/${mongo_db_name}`;
@@ -49,5 +50,5 @@ mongoose_1.default.connect(mongoConnetUrl, { useNewUrlParser: true, useCreateInd
     console.log(`Database online in por ${mongo_db_port}`);
 });
 server.start(() => {
-    console.log(`Servidor corriendo en puerto ${process.env.SERVER_PORT}`);
+    console.log(`Servidor corriendo en puerto ${SERVER_PORT}`);
 });
