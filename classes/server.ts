@@ -14,7 +14,10 @@ export default class Server {
     start( callback: Function ) { 
         // this.app.listen( this.port, callback());
 
-        this.app.listen( this.port, () => { console.log(`listen port ${this.port}`)});
+        // start the server listening for requests
+    this.app.listen(process.env.PORT || 3000, () => console.log(`Server is running... in port ${process.env.PORT}`));
+
+        // this.app.listen( this.port, () => { console.log(`listen port ${this.port}`)});
     }
 
 }
