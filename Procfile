@@ -1,1 +1,1 @@
-web: node dist/app.jsç
+web: node dist/app.js
