@@ -3,7 +3,7 @@ import { verifyToken } from '../middlewares/auth';
 import { Post } from '../models/post.model';
 import { FileUpload } from '../interfaces/file-upload';
 import FileSystem from '../classes/file-system';
-import { User } from '../models/user.model';
+// import { User } from '../models/user.model';
 
 const postRoutes = Router();
 const fileSystem = new FileSystem();
@@ -23,10 +23,6 @@ postRoutes.get('/', async (req: any, res: Response) => {
                             .populate('user','-password')
                             .exec();
 
-    // for(let i = 0; i < posts.length; i++){
-    //     await posts[i].populate('user','-password').execPopulate();
-    // }
-
     res.json({
         ok: true,
         posts: posts,
@@ -39,6 +35,8 @@ postRoutes.post('/', [ verifyToken ], (req: any, res: Response) => {
 
     const body = req.body;
     body.user = req.user._id;
+
+    // Get images already uploaded in a previous step to the temp user folder.
     const images = fileSystem.imagesFromTempToPost( req.user._id );
 
     body.imgs = images;
@@ -59,10 +57,12 @@ postRoutes.post('/', [ verifyToken ], (req: any, res: Response) => {
 
 });
 
+// Upload imagest a temp folder named as the userid
 postRoutes.post('/upload', [ verifyToken ],  async (req: any, res: Response) => {
 
 
-    if (!req.files || Object.keys(req.files).length === 0) {
+    // Return an error message if any file is uploaded.
+    if ( !req.files || Object.keys(req.files).length === 0 ) {
         return res.status(400).json( {
             ok: false,
             message: 'None file was uploaded'
@@ -78,6 +78,7 @@ postRoutes.post('/upload', [ verifyToken ],  async (req: any, res: Response) => 
         });
     }
 
+    // Check the file mimetype, if is not an image it returns an error.
     if ( !file.mimetype.includes('image') ) {
         return res.status(400).json({
             ok: false,
@@ -85,8 +86,7 @@ postRoutes.post('/upload', [ verifyToken ],  async (req: any, res: Response) => 
         });
     }
 
-    // await fileSystem.saveTemporalImage( file, req.user._id );
-
+    // Sae the image(s) in a temporal folder named as the userId name.
     await fileSystem.saveTemporalImage( file, req.user._id )
                     .then(console.log)
                     .catch(console.error);
@@ -99,17 +99,14 @@ postRoutes.post('/upload', [ verifyToken ],  async (req: any, res: Response) => 
 });
 
 
-// postRoutes.get('/image/:userid/:img', [ verifyToken ], (req: any, res: Response) => {
-   postRoutes.get('/image/:userid/:img', (req: any, res: Response) => {
+// Get user image, the path is the userId and the imgName stored in the psot db table. 
+postRoutes.get('/image/:userid/:img', (req: any, res: Response) => {
 
     const userId= req.params.userid;
     const img = req.params.img;
-
     const pathPhoto = fileSystem.getPhotoUrl( userId, img );
 
     res.sendFile( pathPhoto );
-
- 
 });
 
 

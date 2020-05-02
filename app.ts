@@ -39,7 +39,7 @@ const mongo_db_pwd = process.env.MONGO_DB_PWD || null;
 const SERVER_PORT = process.env.PORT || 3000;
 
 
-console.log('mongo_port', mongo_db_port);
+console.log('mongo_port', mongo_db_port); 
 
 
 // By default we set the production env uri.

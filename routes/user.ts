@@ -6,13 +6,7 @@ import { verifyToken } from '../middlewares/auth';
 
 const userRoutes = Router();
 
-// userRoutes.get('/prueba', ( req, res) => {
-//     res.json({
-//         ok: true,
-//         message: 'Todo funciona bien!'
-//     })
-// });
-
+// Login endpoint
 userRoutes.post('/login', (req: Request, res: Response) => {
  const body = req.body;
 
@@ -20,6 +14,7 @@ userRoutes.post('/login', (req: Request, res: Response) => {
 
     if ( err ) throw err;
 
+    // The user was not found in the Db.
     if ( !userDB ) {
         return res.json( {
             ok: false,
@@ -27,8 +22,10 @@ userRoutes.post('/login', (req: Request, res: Response) => {
         })
     }
 
-    if( userDB.checkPassword( body.password)) {
+    // Check password.
+    if( userDB.checkPassword( body.password )) {
 
+        // Generate a valid user token.
         const tokenUser = Token.getJwtToken( {
             _id: userDB._id,
             name: userDB.name,
@@ -43,19 +40,19 @@ userRoutes.post('/login', (req: Request, res: Response) => {
     } else {
         return res.json( {
             ok: false,
-            message: 'User or password is not valid ***'
+            message: 'User or password is not valid'
         })
     }
  })
 });
 
+// Create a new user.
 userRoutes.post('/create', ( req: Request, res: Response) => {
 
     // Extraer info del posteo
     const user = {
-        name: req.body.name,
         email: req.body.email,
-        // Revisar decrypt
+        name: req.body.name,
         password: bcrypt.hashSync(req.body.password, 10),
         avatar: req.body.avatar
     };
@@ -63,7 +60,7 @@ userRoutes.post('/create', ( req: Request, res: Response) => {
     // Store in db
     User.create( user ).then( userDB => {
 
-        console.log('userDB', userDB.email);
+        // Generate a valid user token.
         const tokenUser = Token.getJwtToken( {
             _id: userDB._id,
             name: userDB.name,
@@ -88,11 +85,11 @@ userRoutes.post('/create', ( req: Request, res: Response) => {
 // I set a middleware who will executed before the update endpoint.
 userRoutes.post('/update', verifyToken, ( req: any, res: Response) => {
 
-    // More than one middleware
+    // Can user more than one middleware like this:
     // userRoutes.post('/update', [verifyToken, middleware2], ( req, res) => {
 
     const user = {
-        name: req.body.name     || req.user.name, // Si no se actualiza el data, se usa el antiguo.
+        name: req.body.name     || req.user.name, // If any data is retrieved, then it keeps the old one.
         email: req.body.email   || req.user.email,
         avatar: req.body.avatar || req.user.avatar,
     }

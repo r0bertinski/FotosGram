@@ -2,6 +2,7 @@
 import { Schema, model, Document } from "mongoose";
 import bcrypt from 'bcrypt';
 
+// Schema for mongoDb
 const userSchema = new Schema( {
 
     name: {
@@ -23,8 +24,10 @@ const userSchema = new Schema( {
     },
 });
 
+// Method added to the user schema.
 userSchema.method('checkPassword', function( password: string  = ''): boolean {
 
+    // Compare the post password sent by the login attempt, with the Db stored password for this user.
     if ( bcrypt.compareSync( password, this.password )) {
         return true;
     }

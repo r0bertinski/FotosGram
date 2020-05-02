@@ -14,23 +14,9 @@ class FileSystem {
         console.log('userId', userId);
         return new Promise((resolve, reject) => {
             // Crear carpetas
-            //    const path = this.createUserFolder( userId );
-            // Nombre archivo
-            //    const fileName = this.generateUniqName( file.name );
-            // Mover el archivo del Temp a nuestra carpeta
-            //    file.mv( `${ path }/${ fileName }`, ( err: any) => {
-            //        if ( err ) {
-            //            reject(err);
-            //        } else {
-            //            resolve();
-            //        }
-            //    });
             const path = this.createUserFolder(userId);
-            // console.log('pathUserTemp', path);
             // File Name
             const fileName = this.generateUniqName(file.name);
-            // console.log('fileName', fileName);
-            // fs.chmodSync( path, 777);
             // Move file from temp to the final folder
             file.mv(`${path}/${fileName}`, (err) => {
                 if (err) {
@@ -53,13 +39,10 @@ class FileSystem {
         return `${uniqId}.${extension}`;
     }
     createUserFolder(userId) {
-        // const pathUser = this.getPath( userId, '../uploads/', '/');
         const pathUser = path_1.default.resolve(__dirname, '../uploads/', userId);
         const pathUserTemp = `${pathUser}/temp`;
-        console.log('pathUserTemp', pathUserTemp);
-        ;
-        const existe = fs_1.default.existsSync(pathUser);
-        if (!existe) {
+        const exists = fs_1.default.existsSync(pathUser);
+        if (!exists) {
             fs_1.default.mkdirSync(pathUser);
             fs_1.default.mkdirSync(pathUserTemp);
         }
